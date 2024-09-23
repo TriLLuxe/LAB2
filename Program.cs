@@ -44,7 +44,7 @@ public class Student : IPerson
     }
 
     public override string ToString()
-    {   Console.WriteLine($"ФИО: {Lastname} {Name} {Patronomic}");
+    {   
         string dateOfBirthFormatted = Date.ToString("dd-MM-yyyy");
         return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted}; {Age}; {Course}; {Group}; {Score}";
     }
@@ -58,7 +58,7 @@ public class Student : IPerson
         string firstName = parts[1].Trim();
         string patronymic = parts[2].Trim();
         DateTime dateOfBirth = DateTime.Parse(parts[3].Trim());
-        if (dateOfBirth > DateTime.Now) throw new Exception("Дата рождения не должна быть будущим");
+        if (dateOfBirth > DateTime.Now) throw new Exception("The date of birth should not be the future");
 
         int course = int.Parse(parts[4].Trim());
         int group = int.Parse(parts[5].Trim());
@@ -83,7 +83,9 @@ public class Teacher : IPerson
         Postgraduate,
         Professor,
         Docent,
-        Senior_Lecturer
+        Senior_Lecturer,
+        Junior_Researcher, 
+        Researcher
     }
 
     public Position Post { get; }
@@ -124,7 +126,7 @@ public class Teacher : IPerson
         string firstName = parts[1].Trim();
         string patronymic = parts[2].Trim();
         DateTime dateOfBirth = DateTime.Parse(parts[3].Trim());
-        if (dateOfBirth > DateTime.Now) throw new Exception("Дата рождения не должна быть будущим");
+        if (dateOfBirth > DateTime.Now) throw new Exception("The date of birth should not be the future");
         string department = parts[4].Trim();
         int experience = int.Parse(parts[5].Trim());
         Position post = Enum.Parse<Position>(parts[6].Trim());
@@ -191,12 +193,12 @@ class Program
     {
         while (true)
         {
-            Console.WriteLine("1. Добавить студента");
-            Console.WriteLine("2. Добавить преподавателя");
-            Console.WriteLine("3. Найти по фамилии");
-            Console.WriteLine("4. Показать студентов с баллом выше среднего");
-            Console.WriteLine("5. Выход");
-
+            Console.WriteLine("1. Add a student");
+            Console.WriteLine("2. Add a teacher");
+            Console.WriteLine("3. Find by last name");
+            Console.WriteLine("4. Show students with a score above average");
+            Console.WriteLine("5. Remove a person from the database");
+            Console.WriteLine("6. Exit");
             int choice = int.Parse(Console.ReadLine());
 
             switch (choice)
@@ -214,63 +216,124 @@ class Program
                     FindStudentsByAverageScore();
                     break;
                 case 5:
+                        RemovePerson();
+                    break;
+                case 6:
                     return;
                 default:
-                    Console.WriteLine("Неверный выбор.");
+                    Console.WriteLine("Wrong choice.");
                     break;
             }
         }
     }
     static void AddStudent()
     {
-        Console.WriteLine("Введите данные студента (Фамилия; Имя; Отчество; Дата рождения; Курс; Группа; Балл):");
+        Console.WriteLine("Enter the student's details (Last name; First name; Patronymic; Date of birth; Course; Group; Score):");
         string data = Console.ReadLine();
         try
         {
             Student student = Student.Parse(data);
             university.Add(student);
-            Console.WriteLine("Студент добавлен.");
+            Console.WriteLine("Student added.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 	static void AddTeacher()
     {
-        Console.WriteLine("Введите данные преподавателя (Фамилия; Имя; Отчество; Дата рождения; Кафедра; Стаж; Должность):");
+        Console.WriteLine("Enter the data of the teacher (Last name; First name; Patronymic; Date of birth; Department; Length of service; Position(P.S.Postgraduate, Professor, Docent, Senior_Lecturer, Junior_Researcher, Researcher)):");
         string data = Console.ReadLine();
         try
         {
             Teacher teacher = Teacher.Parse(data);
             university.Add(teacher);
-            Console.WriteLine("Преподаватель добавлен.");
+            Console.WriteLine("The teacher has been added.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Ошибка: {ex.Message}");
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 
     static void FindByLastName()
     {
-        Console.WriteLine("Введите фамилию для поиска:");
+        Console.WriteLine("Enter your last name to search for:");
         string lastName = Console.ReadLine();
         var people = university.FindByLastName(lastName);
-        foreach (var person in people)
+         if (!people.Any())
         {
-            Console.WriteLine(person);
+            Console.WriteLine("No person found with the specified last name.");
+        }
+        else{
+            foreach (var person in people)
+            {
+                Console.WriteLine(person);
+            }
         }
     }
 
-    static void FindStudentsByAverageScore()
+   static void FindStudentsByAverageScore()
+{
+    try
     {
-        Console.WriteLine("Введите минимальный балл:");
+        Console.WriteLine("Enter the minimum score:");
         float score = float.Parse(Console.ReadLine());
         var students = university.FindByAvrPoint(score);
-        foreach (var student in students)
+
+        if (!students.Any())
         {
-            Console.WriteLine(student);
+            Console.WriteLine("No students found with a score above the given value.");
+        }
+        else
+        {
+            foreach (var student in students)
+            {
+                Console.WriteLine(student);
+            }
         }
     }
+    catch (FormatException)
+    {
+        Console.WriteLine("Invalid format. Please enter a valid number.");
+    }
+}
+
+    static void RemovePerson()
+{
+    Console.WriteLine("Enter the last name to delete:");
+    string lastName = Console.ReadLine();
+    var people = university.FindByLastName(lastName);
+    
+    if (!people.Any())
+    {
+        Console.WriteLine("No person found with the specified last name.");
+    }
+    else if (people.Count() > 1)
+    {
+        Console.WriteLine("Multiple people found with the same last name. Please enter the first name to delete:");
+         foreach (var person in people)
+            {
+                Console.WriteLine(person);
+            }
+        string firstName = Console.ReadLine();
+        var personToRemove = people.FirstOrDefault(x => x.Name.Equals(firstName, StringComparison.OrdinalIgnoreCase));
+        
+        if (personToRemove != null)
+        {
+            university.Remove(personToRemove);
+            Console.WriteLine("Deleted");
+        }
+        else
+        {
+            Console.WriteLine("No person found with the specified name and last name.");
+        }
+    }
+    else
+    {
+        university.Remove(people.First());
+        Console.WriteLine("Deleted");
+    }
+}
 }
