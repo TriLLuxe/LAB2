@@ -9,14 +9,14 @@ public interface IPerson
    DateTime Date { get; }
    int Age { get; }
 }
-
+public record Student:IPerson(string Name, string Lastname, string Patronomic, DateTime Date, int Course, int Group, float Score)
 public class Student : IPerson
 {
     public string Lastname { get; }
     public string Name { get; }
     public string Patronomic { get; }
     public DateTime Date { get; }
-    public int Age { get{return CalculateAge(); } }
+    public int Age=>CalculateAge();
     public int Course { get; }
     public int Group { get; }
     public float Score { get; }
@@ -46,7 +46,7 @@ public class Student : IPerson
     public override string ToString()
     {   
         string dateOfBirthFormatted = Date.ToString("dd-MM-yyyy");
-        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted}; {Age}; {Course}; {Group}; {Score}";
+        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted};  {Course}; {Group}; {Score};{Age}";
     }
 
     public static Student Parse(string text)
@@ -74,7 +74,7 @@ public class Teacher : IPerson
     public string Name { get; }
     public string Patronomic { get; }
     public DateTime Date { get; }
-    public int Age { get{return CalculateAge(); } }
+    public int Age =>CalculateAge(); 
     public string Department { get; }
     public int Experience { get; }
 
@@ -115,7 +115,7 @@ public class Teacher : IPerson
     public override string ToString()
     {
         string dateOfBirthFormatted = Date.ToString("dd-MM-yyyy");
-        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted}; {Age}; {Department}; {Experience}; {Post}";
+        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted}; {Department}; {Experience}; {Post}; {Age}";
     }
 
     public static Teacher Parse(string text)

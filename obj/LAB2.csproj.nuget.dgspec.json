@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj": {}
+    "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj": {}
   },
   "projects": {
-    "c:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj": {
+    "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj",
+        "projectUniqueName": "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj",
         "projectName": "LAB2",
-        "projectPath": "c:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj",
+        "projectPath": "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj",
         "packagesPath": "C:\\Users\\Glazu\\.nuget\\packages\\",
-        "outputPath": "c:\\Study\\5 sem\\C#\\LAB2\\obj\\",
+        "outputPath": "C:\\5_semestr\\С#\\LAB2\\LAB2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Glazu\\AppData\\Roaming\\NuGet\\NuGet.Config",
