@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj",
+      "projectUniqueName": "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj",
       "projectName": "LAB2",
-      "projectPath": "C:\\Study\\5 sem\\C#\\LAB2\\LAB2.csproj",
+      "projectPath": "C:\\5_semestr\\С#\\LAB2\\LAB2\\LAB2.csproj",
       "packagesPath": "C:\\Users\\Glazu\\.nuget\\packages\\",
-      "outputPath": "C:\\Study\\5 sem\\C#\\LAB2\\obj\\",
+      "outputPath": "C:\\5_semestr\\С#\\LAB2\\LAB2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Glazu\\AppData\\Roaming\\NuGet\\NuGet.Config",

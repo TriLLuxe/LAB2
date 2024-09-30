@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Fedorova Maria Viktorovna; 07-07-1987; Mathematics; 12; Docent
 Ivanov Sergey Petrovich; 14-05-1975; Mathematics; 20; Professor
 Kuznetsova Olga Alexandrovna; 10-12-1990; Biology; 8; Junior_Researcher
@@ -8,3 +9,15 @@ Sidorov Dmitry Sergeevich; 19-03-1985; Physics; 10; Senior_Lecturer
 Smirnov Pavel Ivanovich; 01-11-1978; Chemistry; 18; Professor
 Vasilyeva Elena Romanovna; 30-09-1995; Physics; 3; Postgraduate
 Voronov Roman Mikhailovich; 14-02-1990; Biology; 9; Researcher
+=======
+Ivanov; Sergey; Petrovich; 1975-05-14; Mathematics; 20; Professor
+Petrova; Anna; Vladimirovna; 1980-08-22; Computer Science; 15; Docent
+Sidorov; Dmitry; Sergeevich; 1985-03-19; Physics; 10; Senior_Lecturer
+Kuznetsova; Olga; Alexandrovna; 1990-12-10; Biology; 8; Junior_Researcher
+Smirnov; Pavel; Ivanovich; 1978-11-01; Chemistry; 18; Professor
+Fedorova; Maria; Viktorovna; 1987-07-07; Mathematics; 12; Docent
+Nikolaev; Alexey; Dmitrievich; 1992-04-25; Computer Science; 5; Researcher
+Vasilyeva; Elena; Romanovna; 1995-09-30; Physics; 3; Postgraduate
+Pavlov; Andrey; Sergeevich; 1982-06-11; Chemistry; 16; Senior_Lecturer
+Voronov; Roman; Mikhailovich; 1990-02-14; Biology; 9; Researcher
+>>>>>>> a16667e47b9ee9a2c1407639dc0640c7a0a0fd3b
