@@ -1,39 +1,32 @@
 ﻿using System;
 using System.Globalization;
- 
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+
 public interface IPerson
 {
-   string Name { get; }
-   string Patronomic { get; }
-   string Lastname { get; }
-   DateTime Date { get; }
-   int Age { get; }
+    string Name { get; }
+    string Patronomic { get; }
+    string Lastname { get; }
+    DateTime Date { get; }
+    int Age { get; }
 }
-public record Student:IPerson(string Name, string Lastname, string Patronomic, DateTime Date, int Course, int Group, float Score)
-public class Student : IPerson
-{
-    public string Lastname { get; }
-    public string Name { get; }
-    public string Patronomic { get; }
-    public DateTime Date { get; }
-    public int Age=>CalculateAge();
-    public int Course { get; }
-    public int Group { get; }
-    public float Score { get; }
 
-    public Student(string name, string lastname, string patronomic, DateTime date, int course, int group, float score)
-    {
-        Name = name;
-        Patronomic = patronomic;
-        Lastname = lastname;
-        Date = date;
-        Course = course;
-        Group = group;
-        Score = score;
-    }
+public record Student(
+    string Name, 
+    string Lastname, 
+    string Patronomic, 
+    DateTime Date, 
+    int Course, 
+    int Group, 
+    float Score
+) : IPerson
+{
+    public int Age => CalculateAge();
 
     private int CalculateAge()
-    { 
+    {
         var today = DateTime.Today;
         var age = today.Year - Date.Year;
         if (today.Month < Date.Month || (today.Month == Date.Month && today.Day < Date.Day))
@@ -44,13 +37,13 @@ public class Student : IPerson
     }
 
     public override string ToString()
-    {   
+    {
         string dateOfBirthFormatted = Date.ToString("dd-MM-yyyy");
-        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted};  {Course}; {Group}; {Score};{Age}";
+        return $"{Lastname} {Name} {Patronomic}; {dateOfBirthFormatted}; {Course}; {Group}; {Score}; {Age}";
     }
 
     public static Student Parse(string text)
-    {   
+    {
         var parts = text.Split(';');
         if (parts.Length != 7) throw new FormatException("Invalid format of input string");
 
@@ -68,41 +61,30 @@ public class Student : IPerson
     }
 }
 
-public class Teacher : IPerson
+public record Teacher(
+    string Name, 
+    string Patronomic, 
+    string Lastname, 
+    DateTime Date, 
+    string Department, 
+    int Experience, 
+    Teacher.Position Post
+) : IPerson
 {
-    public string Lastname { get; }
-    public string Name { get; }
-    public string Patronomic { get; }
-    public DateTime Date { get; }
-    public int Age =>CalculateAge(); 
-    public string Department { get; }
-    public int Experience { get; }
-
     public enum Position
     {
         Postgraduate,
         Professor,
         Docent,
         Senior_Lecturer,
-        Junior_Researcher, 
+        Junior_Researcher,
         Researcher
     }
 
-    public Position Post { get; }
-
-    public Teacher(string name, string patronomic, string lastname, DateTime date, string department, int experience, Position post)
-    {
-        Name = name;
-        Patronomic = patronomic;
-        Lastname = lastname;
-        Date = date;
-        Department = department;
-        Experience = experience;
-        Post = post;
-    }
+    public int Age => CalculateAge();
 
     private int CalculateAge()
-    {   
+    {
         var today = DateTime.Today;
         var age = today.Year - Date.Year;
         if (today.Month < Date.Month || (today.Month == Date.Month && today.Day < Date.Day))
@@ -122,7 +104,7 @@ public class Teacher : IPerson
     {
         var parts = text.Split(';');
         if (parts.Length != 7) throw new FormatException("Invalid format of input string");
-		string lastName = parts[0].Trim();
+        string lastName = parts[0].Trim();
         string firstName = parts[1].Trim();
         string patronymic = parts[2].Trim();
         DateTime dateOfBirth = DateTime.Parse(parts[3].Trim());
@@ -133,33 +115,31 @@ public class Teacher : IPerson
         return new Teacher(firstName, patronymic, lastName, dateOfBirth, department, experience, post);
     }
 }
+
 public interface IUniversity
 {
-   IEnumerable<IPerson> Persons { get; }   // отсортировать в соответствии с вариантом 1-й лабы
-   IEnumerable<Student> Students { get; }  // отсортировать в соответствии с вариантом 1-й лабы
-   IEnumerable<Teacher> Teachers { get; }  // отсортировать в соответствии с вариантом 1-й лабы
+    IEnumerable<IPerson> Persons { get; }   
+    IEnumerable<Student> Students { get; }  
+    IEnumerable<Teacher> Teachers { get; }  
 
-   void Add(IPerson person);
-   void Remove(IPerson person);
+    void Add(IPerson person);
+    void Remove(IPerson person);
 
-   IEnumerable<IPerson> FindByLastName(string lastName);
+    IEnumerable<IPerson> FindByLastName(string lastName);
 
-   // Для нечетных вариантов. Выдать всех студентов, чей средний балл выше заданного.
-   // Отсортировать по среднему баллу
-   IEnumerable<Student > FindByAvrPoint(float avrPoint);
-
-   // Для четных вариантов. Выдать всех преподавателей, название кафедры которых содержит
-   // заданный текст. Отсортировать по должности.
-   IEnumerable<Teacher> FindByDepartment(string text);
+    IEnumerable<Student> FindByAvrPoint(float avrPoint);
+    IEnumerable<Teacher> FindByDepartment(string text);
 }
 
-public class University: IUniversity{
-    
-   private List<IPerson> persons = new List<IPerson>();
-   public IEnumerable<IPerson> Persons => persons.OrderBy(x => x.Lastname);
-   public IEnumerable<Student> Students => persons.OfType<Student>().OrderBy(x => x.Lastname);
-   public IEnumerable<Teacher> Teachers => persons.OfType<Teacher>().OrderBy(x => x.Lastname);
-   public void Add(IPerson person)
+public class University : IUniversity
+{
+    private List<IPerson> persons = new List<IPerson>();
+
+    public IEnumerable<IPerson> Persons => persons.OrderBy(x => x.Lastname);
+    public IEnumerable<Student> Students => persons.OfType<Student>().OrderBy(x => x.Lastname);
+    public IEnumerable<Teacher> Teachers => persons.OfType<Teacher>().OrderBy(x => x.Lastname);
+
+    public void Add(IPerson person)
     {
         persons.Add(person);
     }
@@ -168,37 +148,60 @@ public class University: IUniversity{
     {
         persons.Remove(person);
     }
-     public IEnumerable<IPerson> FindByLastName(string lastName)
+
+    public IEnumerable<IPerson> FindByLastName(string lastName)
     {
-    return persons.Where(x => x.Lastname.Equals(lastName, StringComparison.OrdinalIgnoreCase));
+        return persons.Where(x => x.Lastname.Equals(lastName, StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Student> FindByAvrPoint(float avrPoint)
     {
         return persons.OfType<Student>().Where(x => x.Score > avrPoint).OrderByDescending(x => x.Score);
     }
+
     public IEnumerable<Teacher> FindByDepartment(string text)
     {
         return persons.OfType<Teacher>().Where(x => x.Department.Contains(text, StringComparison.OrdinalIgnoreCase)).OrderBy(x => x.Post);
     }
-            
-                      
-
 }
+
 class Program
 {
     static University university = new University();
 
     static void Main(string[] args)
     {
+        if (File.Exists("Students.txt"))
+        {
+            string[] Students = File.ReadAllLines("Students.txt");
+            foreach (string s in Students)
+            {
+                university.Add(Student.Parse(s));
+            }
+        }
+        
+        if (File.Exists("Teachers.txt"))
+        {
+            string[] Teachers = File.ReadAllLines("Teachers.txt");
+            foreach (string s in Teachers)
+            {
+                university.Add(Teacher.Parse(s));
+            }
+        }
+
         while (true)
         {
             Console.WriteLine("1. Add a student");
             Console.WriteLine("2. Add a teacher");
             Console.WriteLine("3. Find by last name");
             Console.WriteLine("4. Show students with a score above average");
-            Console.WriteLine("5. Remove a person from the database");
-            Console.WriteLine("6. Exit");
+            Console.WriteLine("5. Remove a student");
+            Console.WriteLine("6. Remove a teacher");
+            Console.WriteLine("7. Display the list of students");
+            Console.WriteLine("8. Display a list of teachers");
+            Console.WriteLine("9. Save students database");
+            Console.WriteLine("10. Save teachers database");
+            Console.WriteLine("11. Exit");
             int choice = int.Parse(Console.ReadLine());
 
             switch (choice)
@@ -216,9 +219,24 @@ class Program
                     FindStudentsByAverageScore();
                     break;
                 case 5:
-                        RemovePerson();
+                    RemoveStudent();
                     break;
                 case 6:
+                    RemoveTeacher();
+                    break;
+                case 7:
+                    PrintStudents();
+                    break;
+                case 8:
+                    PrintTeachers();
+                    break;
+                case 9:
+                    SaveStudents();
+                    break;
+                case 10:
+                    SaveTeachers();
+                    break;
+                case 11:
                     return;
                 default:
                     Console.WriteLine("Wrong choice.");
@@ -226,6 +244,7 @@ class Program
             }
         }
     }
+
     static void AddStudent()
     {
         Console.WriteLine("Enter the student's details (Last name; First name; Patronymic; Date of birth; Course; Group; Score):");
@@ -241,9 +260,10 @@ class Program
             Console.WriteLine($"Error: {ex.Message}");
         }
     }
-	static void AddTeacher()
+
+    static void AddTeacher()
     {
-        Console.WriteLine("Enter the data of the teacher (Last name; First name; Patronymic; Date of birth; Department; Length of service; Position(P.S.Postgraduate, Professor, Docent, Senior_Lecturer, Junior_Researcher, Researcher)):");
+        Console.WriteLine("Enter the data of the teacher (Last name; First name; Patronymic; Date of birth; Department; Length of service; Position(P.S.Postgraduate, Professor, Docent, Senior_Lecturer, Junior_Researcher, Researcher)): ");
         string data = Console.ReadLine();
         try
         {
@@ -261,12 +281,13 @@ class Program
     {
         Console.WriteLine("Enter your last name to search for:");
         string lastName = Console.ReadLine();
-        var people = university.FindByLastName(lastName);
-         if (!people.Any())
+        var people = university.FindByLastName(lastName).ToList();
+        if (!people.Any())
         {
             Console.WriteLine("No person found with the specified last name.");
         }
-        else{
+        else
+        {
             foreach (var person in people)
             {
                 Console.WriteLine(person);
@@ -274,66 +295,101 @@ class Program
         }
     }
 
-   static void FindStudentsByAverageScore()
-{
-    try
+    static void FindStudentsByAverageScore()
     {
-        Console.WriteLine("Enter the minimum score:");
-        float score = float.Parse(Console.ReadLine());
-        var students = university.FindByAvrPoint(score);
+        try
+        {
+            Console.WriteLine("Enter the minimum score:");
+            float score = float.Parse(Console.ReadLine());
+            var students = university.FindByAvrPoint(score);
+
+            if (!students.Any())
+            {
+                Console.WriteLine("No students found with a score above the given value.");
+            }
+            else
+            {
+                foreach (var student in students)
+                {
+                    Console.WriteLine(student);
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format. Please enter a valid number.");
+        }
+    }
+
+    static void RemoveStudent()
+    {
+        Console.WriteLine("Enter the last name of the student to delete:");
+        string lastName = Console.ReadLine();
+        var students = university.Students.Where(s => s.Lastname.Equals(lastName, StringComparison.OrdinalIgnoreCase)).ToList();
 
         if (!students.Any())
         {
-            Console.WriteLine("No students found with a score above the given value.");
+            Console.WriteLine("No student found with the specified last name.");
         }
         else
         {
-            foreach (var student in students)
-            {
-                Console.WriteLine(student);
-            }
+            var student = students.First();
+            university.Remove(student);
+            Console.WriteLine("Student removed.");
         }
     }
-    catch (FormatException)
-    {
-        Console.WriteLine("Invalid format. Please enter a valid number.");
-    }
-}
 
-    static void RemovePerson()
-{
-    Console.WriteLine("Enter the last name to delete:");
-    string lastName = Console.ReadLine();
-    var people = university.FindByLastName(lastName);
-    
-    if (!people.Any())
+    static void RemoveTeacher()
     {
-        Console.WriteLine("No person found with the specified last name.");
-    }
-    else if (people.Count() > 1)
-    {
-        Console.WriteLine("Multiple people found with the same last name. Please enter the first name to delete:");
-         foreach (var person in people)
-            {
-                Console.WriteLine(person);
-            }
-        string firstName = Console.ReadLine();
-        var personToRemove = people.FirstOrDefault(x => x.Name.Equals(firstName, StringComparison.OrdinalIgnoreCase));
-        
-        if (personToRemove != null)
+        Console.WriteLine("Enter the last name of the teacher to delete:");
+        string lastName = Console.ReadLine();
+        var teachers = university.Teachers.Where(t => t.Lastname.Equals(lastName, StringComparison.OrdinalIgnoreCase)).ToList();
+
+        if (!teachers.Any())
         {
-            university.Remove(personToRemove);
-            Console.WriteLine("Deleted");
+            Console.WriteLine("No teacher found with the specified last name.");
         }
         else
         {
-            Console.WriteLine("No person found with the specified name and last name.");
+            var teacher = teachers.First();
+            university.Remove(teacher);
+            Console.WriteLine("Teacher removed.");
         }
     }
-    else
+
+    static void PrintStudents()
     {
-        university.Remove(people.First());
-        Console.WriteLine("Deleted");
+        Console.WriteLine("Список студентов:");
+        foreach(var students in university.Students)
+        {
+            Console.WriteLine(students.ToString());
+        }
     }
-}
+
+    static void PrintTeachers()
+    {
+        Console.WriteLine("Список преподавателей:");
+        foreach(var teachers in university.Teachers)
+        {
+            Console.WriteLine(teachers.ToString());
+        }
+    }
+
+    static void SaveStudents()
+    {
+        List<string> output = new List<string>();
+        foreach(var student in university.Students)
+            output.Add(student.ToString());
+        File.WriteAllLines("Students.txt", output);
+        Console.WriteLine("Students saved to file.");
+    }
+
+    static void SaveTeachers()
+    {
+        List<string> output = new List<string>();
+        foreach(var teacher in university.Teachers)
+            output.Add(teacher.ToString());
+        File.WriteAllLines("Teachers.txt", output);
+        Console.WriteLine("Teachers saved to file.");
+    }
 }

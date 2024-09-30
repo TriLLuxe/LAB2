@@ -13,3 +13,18 @@ c:\Study\5 sem\C#\LAB2\obj\Debug\net8.0\LAB2.pdb
 c:\Study\5 sem\C#\LAB2\obj\Debug\net8.0\LAB2.genruntimeconfig.cache
 c:\Study\5 sem\C#\LAB2\obj\Debug\net8.0\ref\LAB2.dll
 c:\Study\5 sem\C#\LAB2\obj\Debug\net8.0\LAB2.sourcelink.json
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.GeneratedMSBuildEditorConfig.editorconfig
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.AssemblyInfoInputs.cache
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.AssemblyInfo.cs
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.csproj.CoreCompileInputs.cache
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.sourcelink.json
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.dll
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\refint\LAB2.dll
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.pdb
+c:\5_semestr\С#\LAB2\LAB2\bin\Debug\net8.0\LAB2.exe
+c:\5_semestr\С#\LAB2\LAB2\bin\Debug\net8.0\LAB2.deps.json
+c:\5_semestr\С#\LAB2\LAB2\bin\Debug\net8.0\LAB2.runtimeconfig.json
+c:\5_semestr\С#\LAB2\LAB2\bin\Debug\net8.0\LAB2.dll
+c:\5_semestr\С#\LAB2\LAB2\bin\Debug\net8.0\LAB2.pdb
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\LAB2.genruntimeconfig.cache
+c:\5_semestr\С#\LAB2\LAB2\obj\Debug\net8.0\ref\LAB2.dll
