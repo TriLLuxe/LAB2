@@ -1,0 +1,11 @@
+Fedorov Ivan Petrovich; 30-06-2003; 2; 204; 3,9
+Glazunov Kirill Dmitrievich; 04-06-2004; 3; 21; 4,67
+Ivanov Alexey Sergeevich; 15-07-2003; 1; 102; 4,2
+Kuznetsova Anna Romanovna; 17-04-2002; 3; 302; 4,1
+Nikolaev Sergey Mikhailovich; 22-08-2001; 4; 402; 4,3
+Pavlova Olga Dmitrievna; 05-10-2001; 4; 403; 4,4
+Petrov Dmitry Ivanovich; 25-11-2002; 2; 203; 3,8
+Sidorova Maria Alexeevna; 05-01-2004; 1; 101; 4,5
+Smirnov Pavel Viktorovich; 12-09-2001; 4; 401; 4
+Vasiliev Andrey Viktorovich; 18-03-2003; 2; 202; 3,7
+Voronova Elena Sergeevna; 10-12-2002; 3; 301; 4,6

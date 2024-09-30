@@ -1,0 +1,10 @@
+Fedorova Maria Viktorovna; 07-07-1987; Mathematics; 12; Docent
+Ivanov Sergey Petrovich; 14-05-1975; Mathematics; 20; Professor
+Kuznetsova Olga Alexandrovna; 10-12-1990; Biology; 8; Junior_Researcher
+Nikolaev Alexey Dmitrievich; 25-04-1992; Computer Science; 5; Researcher
+Pavlov Andrey Sergeevich; 11-06-1982; Chemistry; 16; Senior_Lecturer
+Petrova Anna Vladimirovna; 22-08-1980; Computer Science; 15; Docent
+Sidorov Dmitry Sergeevich; 19-03-1985; Physics; 10; Senior_Lecturer
+Smirnov Pavel Ivanovich; 01-11-1978; Chemistry; 18; Professor
+Vasilyeva Elena Romanovna; 30-09-1995; Physics; 3; Postgraduate
+Voronov Roman Mikhailovich; 14-02-1990; Biology; 9; Researcher
